@@ -68,10 +68,10 @@ Em breve, será disponibilizado o Docker Compose para configuração de monitora
 2. Navegue até o diretório do projeto.
 
 3. Configure a variável de ambiente.
-  ```bash
-  export FILE_OUTPUT_DIRECTORY=C:\Users\<your_user>\Documents\csv  # Para Linux/Mac
-  set FILE_OUTPUT_DIRECTORY=C:\Users\<your_user>\Documents\csv  # Para Windows
-  ```
+    ```bash
+    export FILE_OUTPUT_DIRECTORY=C:\Users\<your_user>\Documents\csv  # Para Linux/Mac
+    set FILE_OUTPUT_DIRECTORY=C:\Users\<your_user>\Documents\csv  # Para Windows
+    ```
 
 4.  Compile o projeto:
     ```bash
