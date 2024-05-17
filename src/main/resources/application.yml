@@ -25,3 +25,16 @@ management:
       show-details: always
     prometheus:
       enabled: true
+
+benchmark:
+  file:
+      output-directory: ${FILE_OUTPUT_DIRECTORY}
+
+openapi:
+  info:
+    title: ${API_TITLE:Runtime Environment Benchmark}
+    description: ${API_DESCRIPTION}
+    version: ${API_VERSION:1.0.0}
+    developer: ${API_DEVELOPER:Ronyeri Marinho}
+    developerUrl: ${API_DEVELOPER_URL}
+    developerContact: ${API_DEVELOPER_CONTACT:ronyerimarinho19@gmail.com}
