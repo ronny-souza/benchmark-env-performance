@@ -33,7 +33,7 @@ benchmark:
 openapi:
   info:
     title: ${API_TITLE:Runtime Environment Benchmark}
-    description: ${API_DESCRIPTION}
+    description: ${API_DESCRIPTION:API for reading and writing CSV files, as well as compressing and decompressing files.}
     version: ${API_VERSION:1.0.0}
     developer: ${API_DEVELOPER:Ronyeri Marinho}
     developerUrl: ${API_DEVELOPER_URL}
