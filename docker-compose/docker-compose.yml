@@ -1,0 +1,65 @@
+version: "3"
+
+networks:
+  benchmark_network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+services:
+  db:
+    container_name: mariadbbenckmark
+    image: mariadb:10.3
+    ports:
+      - "3306:3306"
+    environment:
+      - TZ=America/Recife
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=benchmark
+      - MYSQL_USER=benchmarkuser
+      - MYSQL_PASSWORD=benchmarkpass
+    volumes:
+      - ./db-data:/var/lib/mysql
+      - ./config:/etc/mysql/conf.d
+      - ./dumps:/import
+      - ./mariadb-conf/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf
+    networks:
+      - benchmark_network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u$MYSQL_USER -p$MYSQL_PASSWORD"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - benchmark_network
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - benchmark_network
+
+  app:
+    build:
+      context: ..
+    env_file:
+      - ../env/app.env
+    volumes:
+      - ./output-file:/app/output
+    restart: unless-stopped
+    networks:
+      - benchmark_network
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
